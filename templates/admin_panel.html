@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Admin panel{% endblock %}
+
+{# Override the main_layout block to get a wider, dashboard-style view #}
+{% block main_layout %}
+<div class="row justify-content-center">
+    <div class="col-xl-10">
+
+        <div class="d-flex justify-content-between align-items-center my-4">
+            <div class="d-flex align-items-center">
+                <img id="logo" src="{{ url_for('static', filename='logo.png') }}" alt="logo" class="me-3">
+                <h1 class="h3 mb-0">{% block header %}Admin panel{% endblock %}</h1>
+            </div>
+            <a href="{{ url_for('web.home') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left-circle-fill me-2"></i>Return to Home
+            </a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <div class="row g-5">
+
+                    {# --- LEFT COLUMN: CREATE USER FORM --- #}
+                    <div class="col-lg-5">
+                        <h2 class="h4 mb-3">Create New User</h2>
+                        <form id="create-form" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                                <label for="username">Username</label>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                    <label for="password">Password</label>
+                                </div>
+                                <button class="btn btn-outline-secondary password-toggle-btn" type="button">
+                                    <i class="bi bi-eye-fill" id="toggle-icon"></i>
+                                </button>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="role" name="role">
+                                    <option value="user" selected>User</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                                <label for="role">Permissions</label>
+                            </div>
+
+                            <div id="notify" class="text-center mb-3"></div>
+
+                            <div class="d-grid">
+                                <input class="submit-button btn btn-primary" type="submit" value="Create User">
+                            </div>
+                        </form>
+                    </div>
+
+                    {# --- RIGHT COLUMN: USER LIST --- #}
+                    <div class="col-lg-7">
+                        <h2 class="h4 mb-3">Existing Users</h2>
+                        <ul class="list-group" id="user-list">
+                            
+                        </ul>
+
+
+
+                        {# --- HIDDEN DIV FOR NEW PASSWORD --- #}
+                        <div id="new-password-display" class="alert alert-info mt-4 d-none">
+                            New password for <strong id="reset-username-display"></strong> is:
+                            <strong id="new-password-text" class="user-select-all"></strong>
+                            <a href="#" id="copy-password-link" class="ms-2 small">(Copy)</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main_layout %}
+
+{% block content %}{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin_panel.js') }}"></script>
+{% endblock %}
