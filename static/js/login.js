@@ -11,10 +11,14 @@ document.getElementById("login-form").addEventListener("submit", function(e){
     })
     .then(res => res.json())
     .then(data => {
+        const notify = document.getElementById("notify");
         if(data.success){
             window.location.href = "/home";
         } else {
-            document.getElementById("notify").innerText = data.message;
+            notify.innerText = data.message;
         }
-    });
+    })
+        .catch(error => {
+            notify.innerText = "Server error";
+        });
 });

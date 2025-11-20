@@ -24,8 +24,7 @@
                     <div class="col-lg-5">
                         <h2 class="h4 mb-3">Create New User</h2>
                         <form id="create-form" method="POST">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-
+                            <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
                                 <label for="username">Username</label>
@@ -61,18 +60,18 @@
                     {# --- RIGHT COLUMN: USER LIST --- #}
                     <div class="col-lg-7">
                         <h2 class="h4 mb-3">Existing Users</h2>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <ul class="list-group" id="user-list">
                             
                         </ul>
 
 
-
                         {# --- HIDDEN DIV FOR NEW PASSWORD --- #}
-                        <div id="new-password-display" class="alert alert-info mt-4 d-none">
-                            New password for <strong id="reset-username-display"></strong> is:
-                            <strong id="new-password-text" class="user-select-all"></strong>
-                            <a href="#" id="copy-password-link" class="ms-2 small">(Copy)</a>
+                        <div id="new-password-display" class="alert alert-info d-none">
+                            New password is: <span id="new-pass"></span>
+                            <a href="#" id="copy-pass-link">Copy</a>
                         </div>
+                        <div id="list-notify" class="text-center mb-3"></div>
 
                     </div>
                 </div>

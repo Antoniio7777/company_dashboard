@@ -19,6 +19,7 @@ def create_app(config_name: str = os.getenv('FLASK_ENV')) -> Flask:
     CSRFProtect(app)
     db.init_app(app)
     login_manager.init_app(app)
+    bcrypt.init_app(app)
 
     from models import User
 
@@ -38,7 +39,7 @@ def create_app(config_name: str = os.getenv('FLASK_ENV')) -> Flask:
 
     @app.errorhandler(Exception)
     def handle_exception(e):
-        return jsonify({"success": False, "message": "Server error"}), 500
+        return jsonify({"success": False, "message": str(e)}), 500
 
     migrate = Migrate(app, db)
     return app

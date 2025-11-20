@@ -10,26 +10,22 @@
                 <h1 class="h3 mb-0">{% block header %}Company dashboard{% endblock %}</h1>
             </div>
             <div class="d-flex gap-2">
+                <div class="align-self-center">
+                    Logged as: {{ current_user.username }}
+                </div>
 
                 {% if current_user.role == 'admin' %}
-                <form action="{{ url_for('web.adminpanel') }}" method="POST" style="display: inline;">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-                    <button type="submit" class="btn btn-sm btn-warning" title="Admin panel">
-                        Admin Panel
-                        <i class="bi bi-shield-lock-fill"></i>
-                    </button>
-                </form>
+                <a href="{{ url_for('web.adminpanel') }}" style="display: inline;" class="btn btn-sm btn-warning">
+                Admin Panel <i class="bi bi-shield-lock-fill"></i>
+                </a>
                 {% endif %}
 
-                <form action="{{ url_for('web.change_password') }}" method="POST" style="display: inline;">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-                    <button type="submit" class="btn btn-sm btn-secondary" title="Settings">
-                        <i class="bi bi-gear-fill"></i>
-                    </button>
-                </form>
+                <a href="{{url_for('web.change_password') }}" style="display: inline;" class="btn btn-sm btn-secondary">
+                    <i class="bi bi-gear-fill"></i>
+                </a>
 
                 <form action="{{ url_for('web.logout') }}" method="POST" style="display: inline;">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button type="submit" class="btn btn-sm btn-danger" title="Logout">
                         <i class="bi bi-box-arrow-right"></i>
                     </button>
@@ -51,7 +47,7 @@
                     <span class="badge bg-danger">Priority</span>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">This is a example descripiton of the task.</p>
+                    <p class="card-text">This is an example descripiton of the task.</p>
 
                     <div class="row g-3 small text-muted">
                         <div class="col-md-6 col-lg-3">
